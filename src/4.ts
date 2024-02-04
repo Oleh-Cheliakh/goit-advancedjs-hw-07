@@ -11,16 +11,32 @@ class Person {
 		this.key = key;
 	}
 
-	getKey(): number {
-		return this.key.getSignature();
+	getKey(): Key {
+		return this.key;
 	}
 }
 
 abstract class House {
-	door: boolean;
-	key: Key;
-	constructor(key: Key) {
+	public door: boolean = false;
+	public tenants: Person[] = [];
+	constructor(public key: Key) {
 		this.key = key;
+	}
+
+	comeIn(person: Person): void {
+		if (this.door) {
+			this.tenants.push(person);
+		}
+	}
+
+	openDoor(key: Key): void {}
+}
+
+class MyHouse extends House {
+	openDoor(key: Key): void {
+		if (key === this.key) {
+			this.door = true;
+		}
 	}
 }
 
